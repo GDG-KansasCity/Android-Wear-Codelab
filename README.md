@@ -268,7 +268,7 @@ The notification should be displayed on your phone like this:
 Most of the contents of the big notification are the same. 
 There are a few different things to pay attention here.
 
-1. the Large Icon. The large icon is displayed behind the notificaiton as a background. The difference to the small icon is that we will be using BitmapFactory.decodeResource() decode a png file.
+1. the Large Icon. The large icon is displayed behind the notification as a background. The difference to the small icon is that we will be using BitmapFactory.decodeResource() decode a png file.
 2. The setContentTitle and setContentText will be overriden by the bigStyle.bigText and bigStyle.setBigContentTitle.
 ```java
 case R.id.bigNotification:
@@ -276,7 +276,7 @@ case R.id.bigNotification:
     bigStyle.setBigContentTitle("Override Title"); // bigContentTitle Override the contentTitle
     mBuilder = new NotificationCompat.Builder(this)
         .setSmallIcon(R.drawable.ic_wear_notification)
-        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_sample_codelab))
+        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.face))
         .setContentTitle(eventTitle) // This is unnecessary for the big notification if you use bigText
         .setContentText(eventText) // Unnecessary if setBigContentTitle is Overriden
         .setContentIntent(viewPendingIntent)
@@ -285,12 +285,16 @@ case R.id.bigNotification:
     break;
 ```
 
+[Download face.png here](http://downloadme)
+
 The notification in the wear device should look somewhat like this:
 
 ![bigNot1](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab/master/screenshots/big-not.png)
 
 Since the text is set as a big text it can now expand itself to allow the user to scroll and read the text inside.
 ![bigNot2](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab/master/screenshots/big-not3.png)
+
+Note: The developer documentation recommends landscape images at least 600px wide because Wear will automatically add a paralaxing effect when scrolling notification actions. 
 
 ###### 3. BigView notification with an Action button:
 For this Action we will create another activity. Our goal is to start another activity from the intent and set a message + show the picture that is set as the largeIcon.

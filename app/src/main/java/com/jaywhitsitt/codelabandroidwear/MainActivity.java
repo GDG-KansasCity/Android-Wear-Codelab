@@ -3,8 +3,11 @@ package com.jaywhitsitt.codelabandroidwear;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.NotificationCompat.WearableExtender;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -110,7 +113,6 @@ public class MainActivity extends ActionBarActivity {
         // Specify the 'big view' content to display the long
         // event description that may not fit the normal content text.
         NotificationCompat.BigTextStyle bigStyle = new NotificationCompat.BigTextStyle();
-
         // We instantiate as null because they will be changing based on which button is pressed
         NotificationCompat.Builder mBuilder = null;
         Notification mNotification = null;
@@ -131,6 +133,17 @@ public class MainActivity extends ActionBarActivity {
                 break;
 
             case R.id.bigNotification:
+                bigStyle.bigText(eventDescription); // bigText will override setContentText
+                //bigStyle.setBigContentTitle("Override Title"); // bigContentTitle Override the contentTitle
+                Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.face);
+                mBuilder = new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_wear_notification)
+                        .setLargeIcon(background)
+                        .setContentTitle(eventTitle) // This is unnecessary for the big notification if you use bigText
+                        .setContentText(eventText) // Unnecessary if setBigContentTitle is Overriden
+                        .setContentIntent(viewPendingIntent)
+                        .setAutoCancel(true)
+                        .setStyle(bigStyle);
                 break;
 
             case R.id.bigNotificationWithAction:
