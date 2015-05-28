@@ -251,7 +251,7 @@ notificationManager.notify(notificationId, mBuilder.build());
 Log.d(LOG_TAG, "Normal Notification");
 ```
 
-* Now let's try it out!! Runt he App and click on the first button.
+* Now let's try it out!! Run the App and click on the first button.
 The notification should be displayed on your phone like this:
 
 ![firstNotification](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab/master/screenshots/sample-notification.png)
