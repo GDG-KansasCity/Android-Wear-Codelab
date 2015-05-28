@@ -1,11 +1,10 @@
 Android-Wear-Codelab
 ====================
 
-Last Updated AT FRIDAY -  SEPTEMBER 27, 2014. Thank you [Romin Irani](http://rominirani.com/) for the hints on the outdated code! 
-###### Android Wear codelab for the GDG OSU Stillwater
-This codelab was developed by Marcus Gabilheri to be used in the GDG OSU Stillwater I/O Extended event.
-Feel free to use or modify this codelab for your own purpose.
-If you find a bug leave an issue and I will fix as soon as possible. The code works but in the tutorial I might have left something.
+This codelab was originally written by Marcus Gabilheri for the GDG OSU Stillwater I/O Extended 2014 event and has been updated for newer versions of the used software by Jay Whitsitt for use by GDG Kansas City.
+
+As said in the original repo, feel free to use or modify this codelab for your own purpose.
+If you find a bug leave an issue and I will fix as soon as possible. The code should work but in the tutorial I might have left something.
 
 ###### Necessary Software
 1. JDK - Java Development Kit
@@ -44,7 +43,7 @@ Android Studio Beta 0.8.2 Already come with some pre-built in emulator definitio
 
 ![Connected](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab-Preview/master/screenshots/wear_connected.png)
 
-#### Download the Android project (since this is a Wear codelab, not Android)
+### Download the Android project (since this is a Wear codelab, not Android)
 [ZIP of base Android project](https://github.com/GDG-KansasCity/Android-Wear-Codelab/archive/start.zip)
 
 ### Adding a Android Wear Module
@@ -79,192 +78,6 @@ The android wear notifications by default have an icon embed to it. So let's cha
 * Grab the app icon from from [here](https://github.com/fnk0/Android-Wear-Codelab/blob/master/assets/wear-codelab-icon.png) our use any other image you want. 
 * Repeat the same process of adding the notification Icon but this time select Launcher Icons. Ps: Do not change the name this time. If we leave ic_launcher as the name it will override our standard icon.
 * Click in Finish and now we are all set!
-
-#### Adding Necessary imports to our build.gradle. The gradle file will tell Android Studio which libraries are available to use. If you wish to learn more about Gradle I suggest to look at [Romin Irani Gradle Tutorial](http://rominirani.com/2014/07/28/gradle-tutorial-series-an-overview/) which will explain in detail what gradle is and does. 
-
-###### Inside the module *app* open the file *build.gradle*. The path should be *app/build.gradle*. Be sure to change the build.gradle file inside the module app. A common mistake for most novices with gradle is to change the other build.gradle files. 
-
-```groovy
-// app/build.gradle
-
-apply plugin: 'com.android.application' // This tells gradle that we should use the Android Plugin
-
-android {
-    // The version of android to which we are compiling for
-    compileSdkVersion 19 
-    // The build tools that we are using. If you get a error open SDK Manager and download the build tools.
-    // By the time you do this tutorial the buildToolsVersion will probably be updated...
-    // I suggest to just use the one that was set by default for you by the Android SDK.
-    buildToolsVersion "19.1.0" 
-
-    defaultConfig {
-        applicationId "myawesomepackagename.codelabandroidwear" // The package name of your app, do not change this
-        minSdkVersion 15 // The minimum SDK version that you wish to support
-        targetSdkVersion 19 // The target SDK version (usually the same as compileSdkVersion
-        versionCode 1 // The version code used by the Play Store to keep track of the revisions
-        versionName "1.0" // The version code that the User seems on the Play Store
-    }
-    buildTypes {
-        release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' 
-        }
-    }
-}
-
-dependencies {
-  
-    compile 'com.google.android.gms:play-services:5.0.77' // Google Play Services API's
-    // Support libraries is used to support older versions of Android
-    // Most of the libraries that we will be  using for the Wearable notifications comes from this support libraries.
-    compile 'com.android.support:support-v4:20.0.0' 
-    compile fileTree(dir: 'libs', include: ['*.jar']) // This compiles all the .jar inside libs folder
-}
-
-````
-
-#### Creating the Main Activity XML-Layout
-
-So this might be a big chunk of code... if you already know Android XML layout feel free to copy and paste it. If not take a moment to go through each one of the elements! 
-
-```xml
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:background="#34495e"
-    >
-    <Button
-        android:id="@+id/simpleNotification"
-        android:text="Simple Notification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:onClick="sendNotification"
-    />
-    <Button
-        android:id="@+id/bigNotification"
-        android:text="Big View Notification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:onClick="sendNotification"
-    />
-    <Button
-        android:id="@+id/bigNotificationWithAction"
-        android:text="Big Notification With Action"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:onClick="sendNotification"
-    />
-    <TextView
-        android:text="Custom Notification"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        />
-    <EditText
-        android:id="@+id/notificationTitle"
-        android:hint="Notification Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        />
-    <EditText
-        android:id="@+id/notificationMessage"
-        android:hint="Notification Message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-    />
-    <RadioGroup
-        android:id="@+id/iconGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
-        <RadioButton
-            android:id="@+id/icon1"
-            android:drawableRight="@drawable/ic_wear_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-        />
-        <RadioButton
-            android:id="@+id/icon2"
-            android:drawableRight="@drawable/ic_notification_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-        />
-        <RadioButton
-            android:id="@+id/icon3"
-            android:drawableRight="@drawable/ic_notification3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            />
-    </RadioGroup>
-    <RadioGroup
-        android:id="@+id/hideIconGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        >
-        <RadioButton
-            android:id="@+id/hideIcon"
-            android:text="Hide Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            />
-        <RadioButton
-            android:id="@+id/showIcon"
-            android:text="Show Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            />
-    </RadioGroup>
-    <Button
-        android:id="@+id/sendCustomNotification"
-        android:text="Send Custom Notification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="sendNotification"
-    />
-</LinearLayout>
-```
-
-###### Your layout should look similar (or identical) to this.
-![app-screenshot](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab/master/screenshots/resized-screenshot1.png)
-
-If your layout doesn't looks like this is because of the Style. Open the file res/values/styles.xml and change:
-
-```xml
-<style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-```
-
-To... :
-```xml
-<style name="AppTheme" parent="android:Theme.Holo">
-```
-
-You should also need three drawables. Download them here:
-* [ic_wear_notification](https://github.com/GDG-KansasCity/Android-Wear-Codelab/blob/master/app/src/main/res/drawable-xxhdpi/ic_wear_notification.png?raw=true)
-* [ic_notification_2](https://github.com/GDG-KansasCity/Android-Wear-Codelab/blob/master/app/src/main/res/drawable-xxhdpi/ic_notification_2.png?raw=true)
-* [ic_notification3](https://github.com/GDG-KansasCity/Android-Wear-Codelab/blob/master/app/src/main/res/drawable-xxhdpi/ic_notification3.png?raw=true)
-
-Don't forget to change the Image Asset type to Notification Icons for each of them, otherwise they'll be placed in the mipmap folder, not drawable.
 
 #### Getting our hands into the coding (fun) part of the project.
 
