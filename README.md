@@ -268,7 +268,7 @@ The notification should be displayed on your phone like this:
 Most of the contents of the big notification are the same. 
 There are a few different things to pay attention here.
 
-1. the Large Icon. The large icon is displayed behind the notification as a background. The difference to the small icon is that we will be using BitmapFactory.decodeResource() decode a png file.
+1. The largeIcon is displayed behind the notification as a background. The difference to the small icon is that we will be using BitmapFactory.decodeResource() decode a png file.
 2. The setContentTitle and setContentText will be overriden by the bigStyle.bigText and bigStyle.setBigContentTitle.
 ```java
 case R.id.bigNotification:
@@ -292,9 +292,11 @@ The notification in the wear device should look somewhat like this:
 ![bigNot1](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab/master/screenshots/big-not.png)
 
 Since the text is set as a big text it can now expand itself to allow the user to scroll and read the text inside.
+
 ![bigNot2](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab/master/screenshots/big-not3.png)
 
 Note: The developer documentation recommends landscape images at least 600px wide because Wear will automatically add a paralaxing effect when scrolling notification actions. 
+Another note: You may have noticed that "Override Title" is not the title of our Wear notification. It is however the title of the notification on your device when its expanded. I'm unsure why this is happening. My guess right now is that something changed since this codelab was originally written.
 
 ###### 3. BigView notification with an Action button:
 For this Action we will create another activity. Our goal is to start another activity from the intent and set a message + show the picture that is set as the largeIcon.
@@ -344,30 +346,33 @@ protected void onCreate(Bundle savedInstanceState) {
 // Get the intent information
 Intent extraIntent = getIntent();
 
-// Get the intent information based on the names passed by your notificaiton "message" and 
+// Get the intent information based on the names passed by your notification "message" and 
 mTextView.setText(extraIntent.getStringExtra("message")); // Retrieve the text and set it to our TextView
 mImageView.setImageResource(extraIntent.getIntExtra("photo", 0)); // The zero is a default value in case the intent extra is empty.
 ```
-4. Now that our Second Activity is set and ready to receive some data we procede to build our notificaiton.
+4. Now that our Second Activity is set and ready to receive some data we proceed to build our notification.
 ```java
 case R.id.bigNotificationWithAction:
     // Create the new intent that is gonna receive the information from our action.
     Intent photoIntent = new Intent(this, SecondActivity.class); // Intent pointing to our second activity
     photoIntent.putExtra("message", intentExtra); // Set the extra message that will open in the next activity
-    photoIntent.putExtra("photo", R.drawable.ic_sample_codelab); // Send the photo to the next activity
+    photoIntent.putExtra("photo", R.drawable.face); // Send the photo to the next activity
     
     PendingIntent photoPending = PendingIntent.getActivity(this, 0, photoIntent, 0); // set a new pending intent
-    bigStyle.setBigContentTitle("Mr. Flowers"); // title for the Big Text
+    String title = "Mr. Important";
+    bigStyle.setBigContentTitle(title); // title for the Big Text
     bigStyle.bigText("Check out this picture!! :D"); // Message in the Big Text
     mBuilder = new NotificationCompat.Builder(this)
+            .setContentTitle(title)
             .setSmallIcon(R.drawable.ic_wear_notification) // Small icon for our notification
-            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_sample_codelab)) // The PNG picture
+            .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.face)) // The PNG picture
             .setContentIntent(viewPendingIntent) // This will be the default OPEN button.
             .addAction(R.drawable.ic_photo, "See Photo", photoPending) // This is our extra action. With an Extra Icon and pointing to the other PendingIntent
             .setAutoCancel(true)
             .setStyle(bigStyle); // Add the bigStyle
     break;
 ```
+[Download ic_photo.png here](http://downloadme)
 
 The Action button with our Custom Icon to view the photo:
 
