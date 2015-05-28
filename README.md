@@ -405,6 +405,8 @@ case R.id.sendCustomNotification:
 
 Give it a try now and play with the different notifications!!!
 
+#### Bonus
+
 #### Updated Version of the Tutorial. Creating a Simple Grid Page Adapter:
 
 ##### Replacing the Watch Stub faces:
@@ -468,11 +470,16 @@ As you can see this is just a very simple class that will hold the Data for the 
 
 ##### Creating the GridRow -> Grid Row is a very simple class also that will hold a ArrayList of GridPages
 The GridRow will also have handy methods for:
+
 1. Adding new Pages
+
 2. Getting the size of the row
+
 3. Setting the pages
+
 4. Getting the desired page
 
+GridRow.java
 ```java
     public class GridRow  {
         ArrayList<GridPage> mPages = new ArrayList<GridPage>();
@@ -501,11 +508,16 @@ The GridRow will also have handy methods for:
 ###### Creating the GridPageAdapter -> 
 
 There's a few things to notice here.
+
 1. We override the getBackground() to set the background for each of the pages. 
+
 2. We override the getRowCount() so the adapter know where to look for its size
+
 3. getColumnCount() Will return the number of columns in a specific row. also used internally by the adapter.
+
 4. The getFragment() is the one that will Create a new CardFragment with the information from our GridPage
 
+GridPagerAdapter.java
 ```java
 public class GridPagerAdapter extends FragmentGridPagerAdapter {
 
@@ -526,7 +538,7 @@ public class GridPagerAdapter extends FragmentGridPagerAdapter {
         GridRow row1 = new GridRow();
         row1.addPage(new GridPage("Pink Flower", "Wow! Such flower! Much smells!", R.drawable.ic_info, R.drawable.flower1));
         row1.addPage(new GridPage("Flower?", "Much Pretty! Such nature!", R.drawable.ic_info, R.drawable.flower2));
-        row1.addPage(new GridPage("Red Flower!", "Yes! I know nothing about flowers!", R.drawable.ic_launcher, R.drawable.flower3));
+        row1.addPage(new GridPage("Red Flower!", "Yes! I know nothing about flowers!", R.drawable.ic_info, R.drawable.flower3));
         GridRow row2 = new GridRow();
         row2.addPage(new GridPage("Flowers!", "This is row 2!!!", R.drawable.ic_info, R.drawable.flower4));
         row2.addPage(new GridPage("Row 2 Col 2..", "ZzzzZzZZzzZZZz", R.drawable.ic_info, R.drawable.flower1));
@@ -545,7 +557,7 @@ public class GridPagerAdapter extends FragmentGridPagerAdapter {
     }
 
     /**
-     * This method is Overriden so we can set a Custom Background for each element.
+     * This method is Overridden so we can set a Custom Background for each element.
      * @param row
      * @param column
      * @return
@@ -567,6 +579,12 @@ public class GridPagerAdapter extends FragmentGridPagerAdapter {
     }
 }
 ```
+
+[Download flower1.png here](https://github.com/fnk0/Android-Wear-Codelab/blob/master/wear/src/main/res/drawable/flower1.jpeg?raw=true)
+[Download flower2.png here](https://github.com/fnk0/Android-Wear-Codelab/blob/master/wear/src/main/res/drawable/flower2.jpg?raw=true)
+[Download flower3.png here](https://github.com/fnk0/Android-Wear-Codelab/blob/master/wear/src/main/res/drawable/flower3.jpg?raw=true)
+[Download flower4.png here](https://github.com/fnk0/Android-Wear-Codelab/blob/master/wear/src/main/res/drawable/flower4.jpeg?raw=true)
+[Download ic_info.png here](https://github.com/fnk0/Android-Wear-Codelab/blob/master/wear/src/main/res/drawable-xxhdpi/ic_info.png?raw=true)
 
 ###### Adding the GridPagerAdapter to our Activity
 
