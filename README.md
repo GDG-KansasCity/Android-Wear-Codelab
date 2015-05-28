@@ -285,7 +285,7 @@ case R.id.bigNotification:
     break;
 ```
 
-[Download face.png here](http://downloadme)
+[Download face.png here](https://github.com/GDG-KansasCity/Android-Wear-Codelab/blob/master/app/src/main/res/drawable-xxhdpi/face.png?raw=true)
 
 The notification in the wear device should look somewhat like this:
 
