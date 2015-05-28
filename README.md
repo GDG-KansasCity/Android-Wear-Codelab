@@ -44,8 +44,8 @@ Android Studio Beta 0.8.2 Already come with some pre-built in emulator definitio
 
 ![Connected](https://raw.githubusercontent.com/fnk0/Android-Wear-Codelab-Preview/master/screenshots/wear_connected.png)
 
-#### Download the Android project
-[]()
+#### Download the Android project (since this is a Wear codelab, not Android)
+[ZIP of base Android project](https://github.com/GDG-KansasCity/Android-Wear-Codelab/archive/release/start.zip)
 
 ### Adding a Android Wear Module
 
