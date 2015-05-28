@@ -167,6 +167,20 @@ public class MainActivity extends ActionBarActivity {
                 break;
 
             case R.id.sendCustomNotification:
+                mBuilder = new NotificationCompat.Builder(this)
+                        .setSmallIcon(mCustomIcon)
+                        .setContentTitle(mCustomTitle.getText().toString())
+                        .setContentText(mCustomMessage.getText().toString())
+                        .setAutoCancel(true)
+                        .setContentIntent(viewPendingIntent);
+
+                // This is an example of the NEW WearableNotification SDK.
+                // The WearableNotification has special functionality for wearable devices
+                // By example the setHintHideIcon hides the APP ICON from the notification.
+                // This code is now Up to date thanks to Romin Irani!! Thanks!
+                NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender(mBuilder.build());
+                wearableExtender.setHintHideIcon(!showIcon);
+                wearableExtender.extend(mBuilder);
                 break;
         }
 
