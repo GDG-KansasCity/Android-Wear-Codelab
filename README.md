@@ -372,7 +372,7 @@ case R.id.bigNotificationWithAction:
             .setStyle(bigStyle); // Add the bigStyle
     break;
 ```
-[Download ic_photo.png here](http://downloadme)
+[Download ic_photo.png here](https://github.com/GDG-KansasCity/Android-Wear-Codelab/blob/master/app/src/main/res/drawable-xxhdpi/ic_photo.png?raw=true)
 
 The Action button with our Custom Icon to view the photo:
 
